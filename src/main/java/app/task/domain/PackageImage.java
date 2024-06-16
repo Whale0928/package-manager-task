@@ -11,6 +11,8 @@ import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
@@ -33,6 +35,10 @@ public class PackageImage {
     private String type;
 
     public static PackageImage create(Package packages, String filename, String type) {
+        Objects.requireNonNull(packages, "패키지 정보는 필수입니다.");
+        Objects.requireNonNull(filename, "파일명은 필수입니다.");
+        Objects.requireNonNull(type, "파일 타입은 필수입니다.");
+
         PackageImage image = new PackageImage(packages, filename, type);
         packages.getImages().add(image);
         return image;

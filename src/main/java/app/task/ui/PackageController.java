@@ -1,6 +1,7 @@
 package app.task.ui;
 
 import app.task.application.PackageService;
+import app.task.dto.request.ImageInfoRequest;
 import app.task.dto.request.PackageRegisterRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -53,8 +54,11 @@ public class PackageController {
      * 식별자를 이용하여 패키지에 이미지를 추가합니다.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<?> addImage(@PathVariable Long id) {
-        return ResponseEntity.ok(null);
+    public ResponseEntity<?> addImage(
+            @PathVariable Long id,
+            @RequestBody @Valid ImageInfoRequest images
+    ) {
+        return ResponseEntity.ok(packageService.addImage(id, images.filename(), images.type()));
     }
 
     /**
@@ -62,6 +66,6 @@ public class PackageController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePackage(@PathVariable Long id) {
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(packageService.deletePackage(id));
     }
 }

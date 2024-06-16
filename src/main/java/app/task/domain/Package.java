@@ -40,4 +40,8 @@ public class Package {
             throw new IllegalArgumentException("운송 번호는 12자리 문자열로 구성되어 있어야 합니다.");
         }
     }
+
+    public void addImage(PackageImage newImage) {
+        this.images.add(newImage);
+    }
 }

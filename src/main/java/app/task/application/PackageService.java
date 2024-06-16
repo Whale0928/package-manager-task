@@ -7,6 +7,7 @@ import app.task.domain.PackageRepository;
 import app.task.dto.request.ImageInfoRequest;
 import app.task.dto.request.PackageRegisterRequest;
 import app.task.dto.response.ImageInfoResponse;
+import app.task.dto.response.PackageDeleteResponse;
 import app.task.dto.response.PackageFetchResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +33,7 @@ public class PackageService {
     }
 
     @Transactional(readOnly = true)
-    public PackageFetchResponse getPackageById(Long id) {
+    public PackageFetchResponse getPackageById(final Long id) {
         Package aPackage = packageRepository.findByIdFetchImages(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 패키지가 존재하지 않습니다."));
         List<ImageInfoResponse> images = aPackage.getImages().getImageInfoResponse();
@@ -61,4 +62,27 @@ public class PackageService {
     }
 
 
+    @Transactional
+    public PackageFetchResponse addImage(
+            final Long packageId,
+            final String filename,
+            final String type
+    ) {
+        Package aPackage = packageRepository.findByIdFetchImages(packageId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 패키지가 존재하지 않습니다."));
+        PackageImage newImage = PackageImage.create(aPackage, filename, type);
+        aPackage.addImage(newImage);
+        return PackageFetchResponse.of(aPackage.getId(), aPackage.getTrackingNo(), aPackage.getImages().getImageInfoResponse());
+    }
+
+    @Transactional
+    public PackageDeleteResponse deletePackage(Long id) {
+
+        Package aPackage = packageRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 패키지가 존재하지 않습니다."));
+
+        packageRepository.delete(aPackage);
+
+        return PackageDeleteResponse.success(id);
+    }
 }

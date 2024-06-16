@@ -13,4 +13,6 @@ public interface PackageRepository {
     List<Package> findAll();
 
     Optional<Package> findByTrackingNo(String trackingNo);
+
+    void delete(Package aPackage);
 }
