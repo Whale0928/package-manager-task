@@ -1,0 +1,46 @@
+### 패키지를 생성 할 수 있다.
+POST http://localhost:8080/api/package/register
+Content-Type: application/json
+
+{
+  "trackingNo": "123456789013",
+  "images": [
+    {
+      "filename": "새로운 이미지 등록-1",
+      "type": "jpg"
+    },
+    {
+      "filename": "새로운 이미지 등록-2",
+      "type": "PKG"
+    }
+  ]
+}
+
+### trackingNo가 없으면 패키지를 생성 할 수 없다.
+POST http://localhost:8080/api/package/register
+Content-Type: application/json
+
+{
+  "trackingNo": "",
+  "images": [
+    {
+      "filename": "새로운 이미지 등록-1",
+      "type": "jpg"
+    },
+    {
+      "filename": "새로운 이미지 등록-2",
+      "type": "PKG"
+    }
+  ]
+}
+
+
+### 이미지는 최소 1개 이상이어야 패키지를 생성 할 수 있다.
+POST http://localhost:8080/api/package/register
+Content-Type: application/json
+
+{
+  "trackingNo": "123456789013",
+  "images": [
+  ]
+}

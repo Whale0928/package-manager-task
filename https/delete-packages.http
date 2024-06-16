@@ -1,0 +1,8 @@
+### 특정 패키지를 조회 할 수 있다.
+GET http://localhost:8080/api/package/1
+
+### 이미지를 삭제 할 수 있다.
+DELETE http://localhost:8080/api/package/5
+
+### 존재하지 않는 패키지는 삭제 할 수 없다.
+DELETE http://localhost:8080/api/package/55
