@@ -31,7 +31,8 @@ public class PackageImages {
     }
 
     private PackageImages(List<PackageImage> list) {
-        this.images = list;
+        this.images = new ArrayList<>(list);
+
     }
 
     public static PackageImages create(List<PackageImage> list) {

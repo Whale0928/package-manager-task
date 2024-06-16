@@ -10,4 +10,10 @@ public class PackageImageFixture {
         ++COUNT;
         return new PackageImage(COUNT, packages, FILENAME + COUNT, TYPE);
     }
+
+    public static Package createPackage() {
+        ++COUNT;
+        String trackingNo = String.valueOf(100_000_000_000L + COUNT);
+        return Package.create(trackingNo);
+    }
 }
