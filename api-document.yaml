@@ -1,0 +1,113 @@
+openapi: 3.1.0
+info:
+  title: "API Documentation"
+  description: "해당 프로젝트의 API 문서입니다."
+  version: 1.0.0
+servers:
+  - url: "localhost:8080"
+    description: "Localhost"
+paths:
+  /api/package/{id}:
+    put:
+      summary: "PUT api/package/{id}"
+      operationId: "addImage"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ImageInfoRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+    delete:
+      summary: "DELETE api/package/{id}"
+      operationId: "deletePackage"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+    get:
+      summary: "GET api/package/{id}"
+      operationId: "getPackageById"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/package/register:
+    post:
+      summary: "POST api/package/register"
+      operationId: "registerPackage"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PackageRegisterRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/package:
+    get:
+      summary: "GET api/package"
+      operationId: "getAllPackages"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+components:
+  schemas:
+    ImageInfoRequest:
+      type: "object"
+      properties:
+        filename:
+          type: "string"
+        type:
+          type: "string"
+    PackageRegisterRequest:
+      type: "object"
+      properties:
+        trackingNo:
+          type: "string"
+        images:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ImageInfoRequest"

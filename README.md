@@ -1,9 +1,13 @@
 ## package 관리를 위한 프로젝트입니다.
 
+- [api-document.yaml](api-document.yaml) 파일을 참조해 구현된 api를 확인할 수 있습니다
+- JDK 17을 기준으로 작성되어있습니다.
+- `src/resources/data.sql`을 통해 초기 데이터가 주입됩니다.
+- `test` 패키지를 참조해 테스트 코드를 확인할 수 있습니다.
+
 ## How to Run
 
-- JDK 17을 기준으로 작성되어있습니다.
-- `src/resources/data.sql`을 통해 초기 데이터가 주입
+- JDK 17을 설정해주세요.
 - Gradle build를 수행합니다.
 
 ```shell
