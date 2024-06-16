@@ -1,5 +1,7 @@
 package app.task.ui;
 
+import app.task.application.PackageService;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,24 +11,31 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/api/package")
 @RestController
+@RequestMapping("/api/package")
 public class PackageController {
+
+    private final PackageService packageService;
+
+    public PackageController(PackageService packageService) {
+        this.packageService = packageService;
+    }
 
     /**
      * 모든 패키지 목록을 조회합니다.
      */
     @GetMapping
     public ResponseEntity<?> getAllPackages() {
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(packageService.getAllPackages());
     }
 
     /**
      * 식별자를 이용하여 단일 패키지를 조회합니다.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<?> getPackageById(@PathVariable Long id) {
-        return ResponseEntity.ok(null);
+    public ResponseEntity<?> getPackageById(
+            @PathVariable @NotNull Long id) {
+        return ResponseEntity.ok(packageService.getPackageById(id));
     }
 
     /**

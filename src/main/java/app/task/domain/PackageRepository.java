@@ -8,5 +8,7 @@ public interface PackageRepository {
 
     Optional<Package> findById(Long id);
 
+    Optional<Package> findByIdFetchImages(Long id);
+
     List<Package> findAll();
 }
