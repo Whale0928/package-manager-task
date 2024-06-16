@@ -39,14 +39,14 @@ public class Package {
     }
 
     private Package(String trackingNo) {
+        validateTrackingNo(trackingNo);
         this.trackingNo = trackingNo;
         this.images = new ArrayList<>();
     }
 
-    public void updateTrackingNo(String trackingNo) {
+    public void validateTrackingNo(String trackingNo) {
         if (trackingNo.length() != 12) {
             throw new IllegalArgumentException("운송 번호는 12자리 문자열로 구성되어 있어야 합니다.");
         }
-        this.trackingNo = trackingNo;
     }
 }
