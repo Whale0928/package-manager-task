@@ -4,6 +4,7 @@ import app.task.domain.Package;
 import app.task.domain.PackageFixture;
 import app.task.dto.request.ImageInfoRequest;
 import app.task.dto.request.PackageRegisterRequest;
+import app.task.dto.response.PackageDeleteResponse;
 import app.task.dto.response.PackageFetchResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static app.task.dto.response.PackageDeleteResponse.DeleteMessage;
 import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -157,6 +159,32 @@ class PackageServiceTest {
         // when
         // then
         IllegalArgumentException aThrows = assertThrows(IllegalArgumentException.class, () -> packageService.addImage(100L, "완전 새로운 이미지 파일", "gif"));
+        assertEquals("해당 패키지가 존재하지 않습니다.", aThrows.getMessage());
+    }
+
+    @Test
+    @DisplayName("패키지를 삭제할 수 있다.")
+    void test_9() {
+        // given
+        PackageFixture.setUpPackageList(packageRepository);
+        Package aPackage = packageRepository.findAll()
+                .stream()
+                .findFirst().get();
+        // when
+        PackageDeleteResponse response = packageService.deletePackage(aPackage.getId());
+        // then
+        assertNotNull(response);
+        assertEquals(aPackage.getId(), response.packageId());
+        assertEquals(DeleteMessage.SUCCESS, response.messageStatus());
+        assertEquals(DeleteMessage.SUCCESS.getMessage(), response.message());
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 패키지를 삭제할 경우 예외를 발생한다.")
+    void test_10() {
+        // when
+        // then
+        IllegalArgumentException aThrows = assertThrows(IllegalArgumentException.class, () -> packageService.deletePackage(100L));
         assertEquals("해당 패키지가 존재하지 않습니다.", aThrows.getMessage());
     }
 }

@@ -1,5 +1,7 @@
 package app.task.dto.response;
 
+import lombok.Getter;
+
 import java.time.LocalDateTime;
 
 public record PackageDeleteResponse(
@@ -18,6 +20,7 @@ public record PackageDeleteResponse(
                 LocalDateTime.now());
     }
 
+    @Getter
     public enum DeleteMessage {
         SUCCESS("삭제에 성공하였습니다."),
         FAIL("삭제에 실패하였습니다.");
@@ -27,7 +30,5 @@ public record PackageDeleteResponse(
         DeleteMessage(String message) {
             this.message = message;
         }
-
     }
-
 }
