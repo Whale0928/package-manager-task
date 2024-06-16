@@ -6,7 +6,7 @@ values ('111122223331'),
        ('456789012345'),
        ('654321098765');
 
-INSERT INTO package_images (package_id, filename, type)
+INSERT INTO package_image (package_id, filename, type)
 values (1, 'image1.jpg', 'jpg'),
        (1, 'image2.jpg', 'jpg'),
        (2, 'image3.jpg', 'jpg'),

@@ -1,18 +1,13 @@
 package app.task.domain;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static lombok.AccessLevel.PROTECTED;
 
@@ -27,21 +22,17 @@ public class Package {
     @Column(nullable = false, unique = true)
     private String trackingNo;
 
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "packageId"
-    )
-    private List<PackageImages> images = new ArrayList<>();
+    @Embedded
+    private PackageImages images;
 
-    public static Package create(String trackingNo) {
-        return new Package(trackingNo);
+    public static Package create(String trackingNo, PackageImages images) {
+        return new Package(trackingNo, images);
     }
 
-    private Package(String trackingNo) {
+    private Package(String trackingNo, PackageImages images) {
         validateTrackingNo(trackingNo);
         this.trackingNo = trackingNo;
-        this.images = new ArrayList<>();
+        this.images = images;
     }
 
     public void validateTrackingNo(String trackingNo) {

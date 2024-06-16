@@ -1,40 +1,26 @@
 package app.task.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import app.task.dto.response.ImageInfoResponse;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 
-import static lombok.AccessLevel.PROTECTED;
+import java.util.ArrayList;
+import java.util.List;
 
-@Getter
-@NoArgsConstructor(access = PROTECTED)
-@Entity
+@Embeddable
 public class PackageImages {
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "packageId"
+    )
+    List<PackageImage> images = new ArrayList<>();
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "package_id", nullable = false)
-    private Long packageId;
-
-    @Column(nullable = false)
-    private String filename;
-
-    @Column(nullable = false)
-    private String type;
-
-    public static PackageImages create(Long packageId, String filename, String type) {
-        return new PackageImages(packageId, filename, type);
-    }
-
-    public PackageImages(Long packageId, String filename, String type) {
-        this.packageId = packageId;
-        this.filename = filename;
-        this.type = type;
+    public List<ImageInfoResponse> getImageInfoResponse() {
+        return images.stream()
+                .map(i -> ImageInfoResponse.of(i.getFilename(), i.getType()))
+                .toList();
     }
 }

@@ -11,4 +11,6 @@ public interface PackageRepository {
     Optional<Package> findByIdFetchImages(Long id);
 
     List<Package> findAll();
+
+    Optional<Package> findByTrackingNo(String trackingNo);
 }
