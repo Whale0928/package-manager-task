@@ -35,6 +35,13 @@ public class Package {
         this.images = new PackageImages();
     }
 
+    protected Package(Long id, String trackingNo) {
+        validateTrackingNo(trackingNo);
+        this.id = id;
+        this.trackingNo = trackingNo;
+        this.images = new PackageImages();
+    }
+
     public void validateTrackingNo(String trackingNo) {
         if (trackingNo.length() != 12) {
             throw new IllegalArgumentException("운송 번호는 12자리 문자열로 구성되어 있어야 합니다.");
@@ -43,5 +50,14 @@ public class Package {
 
     public void addImage(PackageImage newImage) {
         this.images.add(newImage);
+    }
+
+    @Override
+    public String toString() {
+        return "Package{" +
+                "id=" + id +
+                ", trackingNo='" + trackingNo + '\'' +
+                ", images=" + images +
+                '}';
     }
 }

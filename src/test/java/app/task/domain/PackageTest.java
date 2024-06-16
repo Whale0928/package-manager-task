@@ -34,7 +34,7 @@ class PackageTest {
 
         // when
         Integer beforeSize = aPackage.getImages().size();
-        PackageImage image = PackageImageFixture.createPackageImage(aPackage);
+        PackageImage image = PackageFixture.createPackageImage(aPackage);
         aPackage.addImage(image);
         PackageImages after = aPackage.getImages();
 

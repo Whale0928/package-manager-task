@@ -12,8 +12,8 @@ class PackageImageTest {
     @DisplayName("패키지 이미지를 생성할 수 있다.")
     void test_1() {
         // given
-        Package aPackage = PackageImageFixture.createPackage();
-        PackageImage image = PackageImageFixture.createPackageImage(aPackage);
+        Package aPackage = PackageFixture.createPackage();
+        PackageImage image = PackageFixture.createPackageImage(aPackage);
 
         // when
         PackageImage newImage = PackageImage.create(aPackage, image.getFilename(), image.getType());

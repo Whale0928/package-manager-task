@@ -17,9 +17,9 @@ class PackageImagesTest {
     @DisplayName("1급 객체 리스트에 이미지를 생성할 수 있다.")
     void test_1() {
         // given
-        Package aPackage = PackageImageFixture.createPackage();
-        PackageImage image_1 = PackageImageFixture.createPackageImage(aPackage);
-        PackageImage image_2 = PackageImageFixture.createPackageImage(aPackage);
+        Package aPackage = PackageFixture.createPackage();
+        PackageImage image_1 = PackageFixture.createPackageImage(aPackage);
+        PackageImage image_2 = PackageFixture.createPackageImage(aPackage);
 
         // when
         PackageImages images = PackageImages.create(List.of(image_1, image_2));
@@ -38,9 +38,9 @@ class PackageImagesTest {
     @DisplayName("1급 객체 리스트에 이미지를 추가할 수 있다.")
     void test_2() {
         // given
-        Package aPackage = PackageImageFixture.createPackage();
-        PackageImage image_1 = PackageImageFixture.createPackageImage(aPackage);
-        PackageImage image_2 = PackageImageFixture.createPackageImage(aPackage);
+        Package aPackage = PackageFixture.createPackage();
+        PackageImage image_1 = PackageFixture.createPackageImage(aPackage);
+        PackageImage image_2 = PackageFixture.createPackageImage(aPackage);
         PackageImages images = PackageImages.create(Collections.singletonList(image_1));
 
         // when
@@ -61,9 +61,9 @@ class PackageImagesTest {
     @DisplayName("1급 객체 리스트에 식별자를 통해 이미지를 조회할 수 있다.")
     void test_3() {
         // given
-        Package aPackage = PackageImageFixture.createPackage();
-        PackageImage image_1 = PackageImageFixture.createPackageImage(aPackage);
-        PackageImage image_2 = PackageImageFixture.createPackageImage(aPackage);
+        Package aPackage = PackageFixture.createPackage();
+        PackageImage image_1 = PackageFixture.createPackageImage(aPackage);
+        PackageImage image_2 = PackageFixture.createPackageImage(aPackage);
         PackageImages images = PackageImages.create(List.of(image_1, image_2));
         Long id = image_1.getId();
 

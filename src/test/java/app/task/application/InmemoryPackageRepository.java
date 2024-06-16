@@ -15,6 +15,7 @@ public class InmemoryPackageRepository implements PackageRepository {
     @Override
     public Package save(Package aPackage) {
         dataSet.put(aPackage.getId(), aPackage);
+        System.out.println("add data = " + aPackage);
         return aPackage;
     }
 
@@ -44,4 +45,5 @@ public class InmemoryPackageRepository implements PackageRepository {
     public void delete(Package aPackage) {
         dataSet.remove(aPackage.getId());
     }
+
 }
