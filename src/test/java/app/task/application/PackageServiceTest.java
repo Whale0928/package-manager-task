@@ -1,5 +1,6 @@
 package app.task.application;
 
+import app.task.domain.Package;
 import app.task.domain.PackageFixture;
 import app.task.dto.request.ImageInfoRequest;
 import app.task.dto.request.PackageRegisterRequest;
@@ -13,6 +14,7 @@ import java.util.List;
 import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -102,6 +104,7 @@ class PackageServiceTest {
         System.out.println(packages);
         // then
         assertAll(
+                () -> assertNotNull(packages.id()),
                 () -> assertNotNull(packages.trackingNo()),
                 () -> assertNotNull(packages.images()),
                 () -> assertEquals(2, packages.images().size())
@@ -117,12 +120,43 @@ class PackageServiceTest {
                 new ImageInfoRequest("filename1", "type1"),
                 new ImageInfoRequest("filename2", "type2")
         );
-        String trackingNo = packageRepository.findAll().stream().findFirst().get().getTrackingNo();
+        String trackingNo = packageRepository.findAll()
+                .stream()
+                .findFirst().get()
+                .getTrackingNo();
+
         PackageRegisterRequest request = new PackageRegisterRequest(trackingNo, imageInfoRequests);
 
         // when
         // then
         IllegalArgumentException aThrows = assertThrows(IllegalArgumentException.class, () -> packageService.registerPackage(request));
         assertEquals("이미 등록된 송장번호입니다.", aThrows.getMessage());
+    }
+
+    @Test
+    @DisplayName("패키지에 이미지를 추가할 수 있다.")
+    void test_7() {
+        // given
+        PackageFixture.setUpPackageList(packageRepository);
+        Package aPackage = packageRepository.findAll()
+                .stream()
+                .findFirst().get();
+        // when
+        Integer beforeImageSize = aPackage.getImages().size();
+        PackageFetchResponse response = packageService.addImage(aPackage.getId(), "완전 새로운 이미지 파일", "gif");
+        Integer afterImageSize = aPackage.getImages().size();
+
+        assertNotNull(response);
+        assertNotEquals(beforeImageSize, afterImageSize);
+        System.out.println(response);
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 패키지에 이미지를 추가할 경우 예외를 발생한다..")
+    void test_8() {
+        // when
+        // then
+        IllegalArgumentException aThrows = assertThrows(IllegalArgumentException.class, () -> packageService.addImage(100L, "완전 새로운 이미지 파일", "gif"));
+        assertEquals("해당 패키지가 존재하지 않습니다.", aThrows.getMessage());
     }
 }

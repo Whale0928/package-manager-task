@@ -2,6 +2,7 @@ package app.task.application;
 
 import app.task.domain.Package;
 import app.task.domain.PackageRepository;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +15,9 @@ public class InmemoryPackageRepository implements PackageRepository {
 
     @Override
     public Package save(Package aPackage) {
-        dataSet.put(aPackage.getId(), aPackage);
+        long id = dataSet.size() + 1L;
+        ReflectionTestUtils.setField(aPackage, "id", id);
+        dataSet.put(id, aPackage);
         System.out.println("add data = " + aPackage);
         return aPackage;
     }
