@@ -25,14 +25,14 @@ public class Package {
     @Embedded
     private PackageImages images;
 
-    public static Package create(String trackingNo, PackageImages images) {
-        return new Package(trackingNo, images);
+    public static Package create(String trackingNo) {
+        return new Package(trackingNo);
     }
 
-    private Package(String trackingNo, PackageImages images) {
+    private Package(String trackingNo) {
         validateTrackingNo(trackingNo);
         this.trackingNo = trackingNo;
-        this.images = images;
+        this.images = new PackageImages();
     }
 
     public void validateTrackingNo(String trackingNo) {

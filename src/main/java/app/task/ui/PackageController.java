@@ -1,13 +1,15 @@
 package app.task.ui;
 
 import app.task.application.PackageService;
-import jakarta.validation.constraints.NotNull;
+import app.task.dto.request.PackageRegisterRequest;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,8 +35,7 @@ public class PackageController {
      * 식별자를 이용하여 단일 패키지를 조회합니다.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<?> getPackageById(
-            @PathVariable @NotNull Long id) {
+    public ResponseEntity<?> getPackageById(@PathVariable Long id) {
         return ResponseEntity.ok(packageService.getPackageById(id));
     }
 
@@ -42,8 +43,10 @@ public class PackageController {
      * 새 패키지를 등록합니다.
      */
     @PostMapping("/register")
-    public ResponseEntity<?> registerPackage() {
-        return ResponseEntity.ok(null);
+    public ResponseEntity<?> registerPackage(
+            @RequestBody @Valid PackageRegisterRequest request
+    ) {
+        return ResponseEntity.ok(packageService.registerPackage(request));
     }
 
     /**

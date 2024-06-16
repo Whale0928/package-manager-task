@@ -11,16 +11,33 @@ import java.util.List;
 
 @Embeddable
 public class PackageImages {
-    @OneToMany(
+
+  @OneToMany(
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
-            mappedBy = "packageId"
+            mappedBy = "packages"
     )
-    List<PackageImage> images = new ArrayList<>();
+    List<PackageImage> images;
 
     public List<ImageInfoResponse> getImageInfoResponse() {
         return images.stream()
                 .map(i -> ImageInfoResponse.of(i.getFilename(), i.getType()))
                 .toList();
+    }
+
+    protected PackageImages() {
+        this.images = new ArrayList<>();
+    }
+
+    private PackageImages(List<PackageImage> list) {
+        this.images = list;
+    }
+
+    public static PackageImages create(List<PackageImage> list) {
+        return new PackageImages(list);
+    }
+
+    public void add(PackageImage image) {
+        images.add(image);
     }
 }

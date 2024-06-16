@@ -2,9 +2,12 @@ package app.task.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,8 +22,9 @@ public class PackageImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "package_id", nullable = false)
-    private Long packageId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "package_id", nullable = false)
+    private Package packages;
 
     @Column(nullable = false)
     private String filename;
@@ -28,12 +32,14 @@ public class PackageImage {
     @Column(nullable = false)
     private String type;
 
-    public static PackageImage create(Long packageId, String filename, String type) {
-        return new PackageImage(packageId, filename, type);
+    public static PackageImage create(Package packages, String filename, String type) {
+        PackageImage image = new PackageImage(packages, filename, type);
+        packages.getImages().add(image);
+        return image;
     }
 
-    public PackageImage(Long packageId, String filename, String type) {
-        this.packageId = packageId;
+    public PackageImage(Package packages, String filename, String type) {
+        this.packages = packages;
         this.filename = filename;
         this.type = type;
     }

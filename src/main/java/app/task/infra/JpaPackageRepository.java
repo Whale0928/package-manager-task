@@ -14,4 +14,8 @@ public interface JpaPackageRepository extends PackageRepository, JpaRepository<P
     @Override
     @Query("select p from Package p left join fetch p.images where p.id = :id")
     Optional<Package> findByIdFetchImages(Long id);
+
+    @Override
+    @Query("select p from Package p where p.trackingNo = :trackingNo")
+    Optional<Package> findByTrackingNo(String trackingNo);
 }
