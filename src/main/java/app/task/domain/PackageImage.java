@@ -40,13 +40,29 @@ public class PackageImage {
         Objects.requireNonNull(type, "파일 타입은 필수입니다.");
 
         PackageImage image = new PackageImage(packages, filename, type);
-        packages.getImages().add(image);
+        packages.addImage(image);
         return image;
     }
 
-    public PackageImage(Package packages, String filename, String type) {
+    private PackageImage(Package packages, String filename, String type) {
         this.packages = packages;
         this.filename = filename;
         this.type = type;
+    }
+
+    protected PackageImage(Long id, Package packages, String filename, String type) {
+        this.id = id;
+        this.packages = packages;
+        this.filename = filename;
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "PackageImage{" +
+                "id=" + id +
+                ", filename='" + filename + '\'' +
+                ", type='" + type + '\'' +
+                '}';
     }
 }

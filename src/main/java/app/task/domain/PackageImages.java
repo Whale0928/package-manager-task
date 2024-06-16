@@ -8,11 +8,12 @@ import jakarta.persistence.OneToMany;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Embeddable
 public class PackageImages {
 
-  @OneToMany(
+    @OneToMany(
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "packages"
@@ -38,6 +39,16 @@ public class PackageImages {
     }
 
     public void add(PackageImage image) {
-        images.add(image);
+        this.images.add(image);
+    }
+
+    public Integer size() {
+        return this.images.size();
+    }
+
+    public Optional<PackageImage> get(Long id) {
+        return this.images.stream()
+                .filter(image -> image.getId().equals(id))
+                .findFirst();
     }
 }
